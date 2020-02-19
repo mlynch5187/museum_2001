@@ -42,8 +42,8 @@ class MuseumTest < MiniTest::Test
     @dmns.add_exhibit(@dead_sea_scrolls)
     @dmns.add_exhibit(@imax)
 
-    assert_equal ["Gems and Minerals", "Dead Sea Scrolls"], @dmns.recommend_exhibits(@patron_1)
-    assert_equal ["IMAX"], @dmns.recommend_exhibits(@patron_2)
+    assert_equal [@gems_and_minerals, @dead_sea_scrolls], @dmns.recommend_exhibits(@patron_1)
+    assert_equal [@imax], @dmns.recommend_exhibits(@patron_2)
   end
 
   def test_patrons_can_be_admitted_to_the_museum
@@ -55,6 +55,14 @@ class MuseumTest < MiniTest::Test
 
     assert_equal [@patron_1, @patron_2, @patron_3], @dmns.patrons
   end
+
+  def test_patrons_can_be_retrieved_by_exhibit_interest
+    assert_equal ({
+      @gems_and_minerals => [@patron1],
+      @dead_sea_scrolls => [@patron1, @patron3],
+      @IMAX => [@patron_2]
+    }), @dmns.patrons_by_exhibit_interest
+  end
 end
 
 
@@ -65,15 +73,7 @@ end
 # pry(main)> patron_3.add_interest("Dead Sea Scrolls")
 
 # #Patrons are added even if they don't have enough money for all/any exhibits.
-#
-# pry(main)> dmns.patrons_by_exhibit_interest
-# # =>
-# # {
-# #   #<Exhibit:0x00007fb202238618...> => [#<Patron:0x00007fb2011455b8...>],
-# #   #<Exhibit:0x00007fb202248748...> => [#<Patron:0x00007fb2011455b8...>, #<Patron:0x00007fb20227f8b0...>, #<Patron:0x6666fb20114megan...>],
-# #   #<Exhibit:0x00007fb20225f8d0...> => []
-# # }
-#
+
 # pry(main)> dmns.ticket_lottery_contestants(dead_sea_scrolls)
 # # => [#<Patron:0x00007fb2011455b8...>, #<Patron:0x6666fb20114megan...>]
 #

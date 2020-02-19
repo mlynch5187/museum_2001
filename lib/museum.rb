@@ -20,6 +20,7 @@ class Museum
     # exhibits.map do |exhibit|
     #   if exhibit.name.include?(patron.interests)
     #     recommendations << exhibit
+    #     end
     #   end
     # end
     #   recommendations
@@ -28,8 +29,4 @@ class Museum
   def admit(patron)
     @patrons << patron
   end
-
-  # def patrons_by_exhibit_interest
-  #
-  # end
 end
